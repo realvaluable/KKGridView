@@ -564,6 +564,7 @@ struct KKSectionMetrics {
         // for footerViews we have to work with the bottom of the screen
         CGFloat screenBottom = offset + visibleBounds.size.height;
         
+#ifdef STICK_FOOTERS_TO_THE_BOTTOM_OF_THE_SCREEN
         // determine if current section footer should be displayed sticky
         // this is if current section is visible and the "normal" y-position of the footer
         // isn't further away from the bottom of the screen than it's height
@@ -591,6 +592,7 @@ struct KKSectionMetrics {
             [self _insertSubviewBelowScrollbar:footer.view];
             
         } else {
+#endif
             if (_dataSourceRespondsTo.titleForFooter)
                 footer.view.backgroundColor = [UIColor colorWithPatternImage:headerBackgrounds[0]];
             
@@ -598,7 +600,9 @@ struct KKSectionMetrics {
             f.origin.y = footer->stickPoint;
             [self insertSubview:footer.view aboveSubview:_backgroundView];
             [self sendSubviewToBack:footer.view];
+#ifdef STICK_FOOTERS_TO_THE_BOTTOM_OF_THE_SCREEN
         }
+#endif
         
         footer.view.frame = f;
     }
